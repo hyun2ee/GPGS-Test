@@ -10,6 +10,10 @@ using System.Text;
 using UnityEngine.SocialPlatforms.GameCenter;
 #endif
 
+// 소셜 참고용 스크립트1
+// 사용 안하고 예시로 받은 스크립트이다.
+// 참고 바람.
+
 public class GooglePlayManager : MonoBehaviour {
     #region 싱글톤
     private static GooglePlayManager _instance = null;
@@ -144,6 +148,5 @@ public class GooglePlayManager : MonoBehaviour {
 
         Social.ShowAchievementsUI();
     }
-
     #endregion
 }

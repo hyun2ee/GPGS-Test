@@ -2,6 +2,13 @@
 using UnityEngine.UI;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#if UNITY_IOS || UNITY_EDITOR_OSX
+using UnityEngine.SocialPlatforms.GameCenter;
+#endif
+
+// 소셜 참고용 스크립트2
+// 게임 동작을 위한 버튼만 호출한다.
+// 참고 바람.
 
 public class TestA : MonoBehaviour
 {
@@ -16,15 +23,17 @@ public class TestA : MonoBehaviour
 
     void Awake()
     {
+#if UNITY_ANDROID
         PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
-
+#endif 
         isNew = true;
         nScore = 0;
         nIQ = 0;
         nAchievement = 0;
     }
+
     public void OnBtnLoginClicked()
     {
         //이미 인증된 사용자는 바로 로그인 성공됩니다.
@@ -51,7 +60,13 @@ public class TestA : MonoBehaviour
 
     public void OnBtnLogoutClicked()
     {
+        // Active된 Social Plaform을 호출하여, PlayGamesPlatform 으로 대입시켜 SignOut 한다.
+#if UNITY_ANDOID
         ((PlayGamesPlatform)Social.Active).SignOut();
+#elif UNITY_IOS || UNITY_EDITOR_OSX
+        ((GameCenterPlatform)Social.Active).
+#endif
+        // Active 여부 상관 없이 SignOut() 호출
         //PlayGamesPlatform.Instance.SignOut();
     }
 
@@ -64,21 +79,25 @@ public class TestA : MonoBehaviour
     {
         Application.Quit();
     }
-    
+
+#region SimpleGame
     public void OnBtnPlayGameClicked()
     {
         if (isNew)
             //초보 탈출 (표준 유형은 progress 값을 바로 100으로 넣어주면 됩니다.)
-            Social.ReportProgress(GPGSIds.achievement, 100.0f, (bool success) => {
-            if (success) {
-                isNew = false;
-                Debug.Log("초보 탈출 획득 성공");
-                txtLog.text = "초보 탈출 획득 성공";
-                //단계별 업적의 경우 ReportProgress 보다 IncrementAchievement 함수를 사용하는 게 좋습니다.
-                //Social.ReportProgress(GPGSIds.achievement, 0.5f, null);
-                PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__4, 1, null);
+            Social.ReportProgress(GPGSIds.achievement, 100.0f, (bool success) =>
+            {
+                if (success)
+                {
+                    isNew = false;
+                    Debug.Log("초보 탈출 획득 성공");
+                    txtLog.text = "초보 탈출 획득 성공";
+                    //단계별 업적의 경우 ReportProgress 보다 IncrementAchievement 함수를 사용하는 게 좋습니다.
+                    //Social.ReportProgress(GPGSIds.achievement, 0.5f, null);
+                    PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__4, 1, null);
 
-                    PlayGamesPlatform.Instance.LoadAchievements((UnityEngine.SocialPlatforms.IAchievement[] achieves) => {
+                    PlayGamesPlatform.Instance.LoadAchievements((UnityEngine.SocialPlatforms.IAchievement[] achieves) =>
+                    {
                         Debug.Log(achieves[0].id + "!!!!!!!!!!!");
                     });
 
@@ -99,8 +118,8 @@ public class TestA : MonoBehaviour
         int nStep = 1;
         nScore += 50;
         txtScore.text = "점수 : " + nScore;
-        
-        if(nScore.Equals(1000))
+
+        if (nScore.Equals(1000))
             PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__1000, nStep, (bool success) =>
             {
                 if (success)
@@ -120,10 +139,10 @@ public class TestA : MonoBehaviour
                 }
             });
         //1000점을 10단계로 했으니 1단계당 100점이므로 100점마다 단계를 올려줍니다.
-        else if(nScore < 1000 && (nScore % 100).Equals(0))
+        else if (nScore < 1000 && (nScore % 100).Equals(0))
             PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__1000, nStep, (bool success) =>
             {
-                if(success)
+                if (success)
                 {
                     Debug.Log("점수 획득 성공" + nScore);
                     txtLog.text = "점수 획득 성공" + nScore;
@@ -184,7 +203,7 @@ public class TestA : MonoBehaviour
         }
 
         //200점을 2단계로 했으니 1단계당 100점이므로 100점마다 단계를 올려준다.
-        if(nIQ <= 200 && (nIQ % 100).Equals(0))
+        if (nIQ <= 200 && (nIQ % 100).Equals(0))
             PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__200, nStep, (bool success) =>
             {
                 if (success)
@@ -221,4 +240,5 @@ public class TestA : MonoBehaviour
                 }
             });
     }
+#endregion
 }
