@@ -94,7 +94,7 @@ public class Test_achieves_ : MonoBehaviour
         SocialSignIn();
 
 #elif UNITY_IOS
-        SocialSingIn();
+        SocialSignIn();
 #endif
     }
 
@@ -126,13 +126,15 @@ public class Test_achieves_ : MonoBehaviour
     public void SocialSignOut()
     {
         // Active된 Social Plaform을 호출하여, PlayGamesPlatform 으로 대입시켜 SignOut 한다.
+#if UNITY_ANDOID
         ((PlayGamesPlatform)Social.Active).SignOut();
+#endif
         // Active 여부 상관 없이 SignOut() 호출
         //PlayGamesPlatform.Instance.SignOut();
     }
-    #endregion
+#endregion
 
-    #region 버튼 동작 함수
+#region 버튼 동작 함수
     // LogIn
     public void OnBtnLoginClicked(){
         SocialSignIn();
@@ -177,5 +179,5 @@ public class Test_achieves_ : MonoBehaviour
         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_coverd_scenario_02, 0f, null);
 #endif
     }
-    #endregion
+#endregion
     }
