@@ -77,21 +77,21 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // 상품 정의 빌더에 품목 추가
         builder.AddProduct(
             ProductGold, ProductType.Consumable, new IDs() {
-                //{_iOS_GoldId, AppleAppStore.Name },
+                {_iOS_GoldId, AppleAppStore.Name },
                 {_android_GoldId, GooglePlay.Name }
             }
         );
 
         builder.AddProduct(
             ProductSkin, ProductType.NonConsumable, new IDs() {
-                //{_iOS_SkinId, AppleAppStore.Name },
+                {_iOS_SkinId, AppleAppStore.Name },
                 {_android_SkinId, GooglePlay.Name }
             }
         );
 
         builder.AddProduct(
             ProductSub, ProductType.Subscription, new IDs() {
-                //{_iOS_SubId, AppleAppStore.Name },
+                {_iOS_SubId, AppleAppStore.Name },
                 {_android_SubId, GooglePlay.Name }
             }
         );
