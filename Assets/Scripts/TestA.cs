@@ -63,8 +63,6 @@ public class TestA : MonoBehaviour
         // Active된 Social Plaform을 호출하여, PlayGamesPlatform 으로 대입시켜 SignOut 한다.
 #if UNITY_ANDOID
         ((PlayGamesPlatform)Social.Active).SignOut();
-#elif UNITY_IOS || UNITY_EDITOR_OSX
-        ((GameCenterPlatform)Social.Active).
 #endif
         // Active 여부 상관 없이 SignOut() 호출
         //PlayGamesPlatform.Instance.SignOut();
@@ -94,13 +92,14 @@ public class TestA : MonoBehaviour
                     txtLog.text = "초보 탈출 획득 성공";
                     //단계별 업적의 경우 ReportProgress 보다 IncrementAchievement 함수를 사용하는 게 좋습니다.
                     //Social.ReportProgress(GPGSIds.achievement, 0.5f, null);
+#if UNITY_ANDOID
                     PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__4, 1, null);
 
                     PlayGamesPlatform.Instance.LoadAchievements((UnityEngine.SocialPlatforms.IAchievement[] achieves) =>
                     {
                         Debug.Log(achieves[0].id + "!!!!!!!!!!!");
                     });
-
+#endif
                     nAchievement++;
                     txtAchievement.text = "달성한 업적 수 : " + nAchievement;
                     //마지막 인자에 null을 넣어주면 콜백을 받지 않습니다.
@@ -113,13 +112,13 @@ public class TestA : MonoBehaviour
             });
     }
 
-    public void OnBtnGetScoreClicked()
-    {
+    public void OnBtnGetScoreClicked() {
         int nStep = 1;
         nScore += 50;
         txtScore.text = "점수 : " + nScore;
 
-        if (nScore.Equals(1000))
+        if (nScore.Equals(1000)) {
+#if UNITY_ANDOID
             PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__1000, nStep, (bool success) =>
             {
                 if (success)
@@ -138,23 +137,25 @@ public class TestA : MonoBehaviour
                     txtScore.text = "점수 : " + nScore;
                 }
             });
+#endif
+        }
         //1000점을 10단계로 했으니 1단계당 100점이므로 100점마다 단계를 올려줍니다.
-        else if (nScore < 1000 && (nScore % 100).Equals(0))
-            PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__1000, nStep, (bool success) =>
-            {
-                if (success)
-                {
+        else if (nScore < 1000 && (nScore % 100).Equals(0)) {
+#if UNITY_ANDOID
+            PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__1000, nStep, (bool success) => {
+                if (success) {
                     Debug.Log("점수 획득 성공" + nScore);
                     txtLog.text = "점수 획득 성공" + nScore;
                 }
-                else
-                {
+                else {
                     Debug.Log("점수 획득 실패");
                     txtLog.text = "점수 획득 실패";
                     nScore -= 50;
                     txtScore.text = "점수 : " + nScore;
                 }
             });
+#endif
+        }
     }
 
     public void OnBtnHiddenClicked()
@@ -173,7 +174,9 @@ public class TestA : MonoBehaviour
                 {
                     Debug.Log("천재 획득 성공");
                     txtLog.text = "천재 획득 성공";
+#if UNITY_ANDOID
                     PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__4, 1, null);
+#endif
                     nAchievement++;
                     txtAchievement.text = "달성한 업적 수 : " + nAchievement;
                 }
@@ -203,42 +206,39 @@ public class TestA : MonoBehaviour
         }
 
         //200점을 2단계로 했으니 1단계당 100점이므로 100점마다 단계를 올려준다.
-        if (nIQ <= 200 && (nIQ % 100).Equals(0))
-            PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__200, nStep, (bool success) =>
-            {
-                if (success)
-                {
-                    if (nIQ.Equals(200))
-                    {
+        if (nIQ <= 200 && (nIQ % 100).Equals(0)) {
+#if UNITY_ANDOID
+            PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__200, nStep, (bool success) => {
+                if (success) {
+                    if (nIQ.Equals(200)) {
                         Debug.Log("IQ 200 업적 획득");
                         txtLog.text = "IQ 200 업적 획득";
                         PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement__4, 1, null);
                         nAchievement++;
                         txtAchievement.text = "달성한 업적 수 : " + nAchievement;
                     }
-                    else
-                    {
+                    else {
                         Debug.Log("IQ 올리기 성공" + nScore);
                         txtLog.text = "IQ 올리기 성공" + nScore;
                     }
                 }
-                else
-                {
+                else {
 
-                    if (nIQ.Equals(200))
-                    {
+                    if (nIQ.Equals(200)) {
                         Debug.Log("IQ 200 업적 획득 실패");
                         txtLog.text = "IQ 200 업적 획득 실패";
                         nIQ = 150;
                     }
-                    else
-                    {
+                    else {
                         Debug.Log("IQ 올리기 실패");
                         txtLog.text = "IQ 올리기 실패";
                         nIQ -= 50;
                     }
                 }
             });
+#endif
+        }
+
     }
 #endregion
 }
