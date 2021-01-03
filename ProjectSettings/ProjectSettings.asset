@@ -162,6 +162,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.Hitwave.GPGSTest
     Standalone: com.Studio806.GPGSTest
+    iPhone: com.Hitwave.GPGSTest
   buildNumber: {}
   AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 16
@@ -241,12 +242,12 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
-  appleDeveloperTeamID: 
-  iOSManualSigningProvisioningProfileID: 
+  appleDeveloperTeamID: Y85VS7R8D8
+  iOSManualSigningProvisioningProfileID: 474193ec-3e67-4c82-8527-22e93fad7274
   tvOSManualSigningProvisioningProfileID: 
-  iOSManualSigningProvisioningProfileType: 0
+  iOSManualSigningProvisioningProfileType: 1
   tvOSManualSigningProvisioningProfileType: 0
-  appleEnableAutomaticSigning: 0
+  appleEnableAutomaticSigning: 2
   iOSRequireARKit: 0
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0

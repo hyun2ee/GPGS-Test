@@ -126,7 +126,7 @@ public class GooglePlayManager : MonoBehaviour {
 #if UNITY_ANDROID
         //PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_sum_of_all_stage_score);
 #elif UNITY_IOS
-        GameCenterPlatform.ShowLeaderboardUI(GPGSIds.leaderboard_sum_of_all_stage_score, UnityEngine.SocialPlatforms.TimeScope.AllTime);
+        //GameCenterPlatform.ShowLeaderboardUI(GPGSIds.leaderboard_sum_of_all_stage_score, UnityEngine.SocialPlatforms.TimeScope.AllTime);
 #endif
     }
     #endregion

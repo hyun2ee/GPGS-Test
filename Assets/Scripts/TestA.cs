@@ -49,6 +49,9 @@ public class TestA : MonoBehaviour
                 {
                     Debug.Log(Social.localUser.userName);
                     txtLog.text = "name : " + Social.localUser.userName + "\n";
+#if UNITY_IOS
+                    GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+#endif
                 }
                 else
                 {
