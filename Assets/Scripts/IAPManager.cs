@@ -176,7 +176,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
         var product = storeController.products.WithID(productId);
 
         if(product != null) {
-            return product.hasReceipt; // 영수증이 있으면, 구매한것이다. Nonconsumable, subsript 상품에만 해당한다.
+            return product.hasReceipt; // 영수증이 있으면, 구매한것이다. Nonconsumable, subsript 상품에만 해당한다. consumable은 영수증이 없다.
+                                       // 물약은 이전에 샀는지 안샀는지 알 필요 없잖아?
         }
 
         return false; // 상품 가져오기 실패 시
